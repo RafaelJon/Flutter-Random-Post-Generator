@@ -8,7 +8,12 @@ abstract class PostState extends Equatable {
 }
 
 class EmptyPost extends PostState {
-  const EmptyPost() : super();
+  const EmptyPost({this.error = false}) : super();
+
+  final bool error;
+
+  @override
+  List<Object?> get props => [error];
 }
 
 class LoadingPost extends PostState {

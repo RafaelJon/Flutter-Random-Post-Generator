@@ -16,7 +16,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   void _onGeneratePost(GeneratePost event, Emitter<PostState> emit) async {
     emit(const LoadingPost());
-    int randomId = Random().nextInt(100);
+    int randomId = Random().nextInt(200);
     var url = Uri.parse("https://jsonplaceholder.typicode.com/posts/$randomId");
     try {
       http.Response res = await http.get(url);
@@ -29,7 +29,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         ),
       );
     } catch (e) {
-      add(const ResetPost());
+      print(e);
+      add(const ResetPost(error: true));
     }
   }
 
@@ -43,6 +44,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   void _onResetPost(ResetPost event, Emitter<PostState> emit) {
-    emit(const EmptyPost());
+    emit(EmptyPost(error: event.error));
   }
 }

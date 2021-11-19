@@ -25,5 +25,10 @@ class LoadingCompletePost extends PostEvent {
 }
 
 class ResetPost extends PostEvent {
-  const ResetPost() : super();
+  const ResetPost({this.error = false}) : super();
+
+  final bool error;
+
+  @override
+  List<Object?> get props => [error];
 }

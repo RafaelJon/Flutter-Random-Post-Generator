@@ -12,6 +12,10 @@ class Post {
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {
+    if (json['title'] == null || json['title'].toString().isEmpty) {
+      throw const FormatException("no data in response");
+    }
+
     return Post(
       userId: json['userId'] as int,
       id: json['id'] as int,

@@ -10,7 +10,22 @@ class PostPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(
+    return BlocConsumer<PostBloc, PostState>(
+      listenWhen: (previous, current) {
+        print(current);
+        if (current is EmptyPost && current.error) return true;
+
+        return false;
+      },
+      listener: (context, state) {
+        const snackbar = SnackBar(
+          content: Text(
+            'Error getting data',
+          ),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
